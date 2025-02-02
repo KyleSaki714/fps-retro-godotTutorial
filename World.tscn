@@ -1,0 +1,134 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://environment/raw_assets/grass_lowres.png" type="Texture" id=1]
+[ext_resource path="res://pickups/MachineGunPickup.tscn" type="PackedScene" id=2]
+[ext_resource path="res://environment/assets/shed.tscn" type="PackedScene" id=3]
+[ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://weapons/FireballSpawner.tscn" type="PackedScene" id=5]
+[ext_resource path="res://environment/assets/brickwall.tscn" type="PackedScene" id=6]
+[ext_resource path="res://characters/enemies/ReptileMonster.tscn" type="PackedScene" id=7]
+[ext_resource path="res://characters/enemies/BirdMonster.tscn" type="PackedScene" id=8]
+[ext_resource path="res://pickups/MachineGunAmmoPickup.tscn" type="PackedScene" id=9]
+[ext_resource path="res://pickups/RocketLauncherAmmoPickup.tscn" type="PackedScene" id=10]
+[ext_resource path="res://pickups/HealthPickup.tscn" type="PackedScene" id=11]
+[ext_resource path="res://pickups/RocketLauncherPickup.tscn" type="PackedScene" id=12]
+[ext_resource path="res://pickups/ShotGunAmmoPickup.tscn" type="PackedScene" id=13]
+[ext_resource path="res://pickups/ShotGunPickup.tscn" type="PackedScene" id=14]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 50, 50, 0 )
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
+size = Vector3( 100, 2, 100 )
+
+[sub_resource type="ConcavePolygonShape" id=3]
+data = PoolVector3Array( -50, 1, 50, 50, 1, 50, -50, -1, 50, 50, 1, 50, 50, -1, 50, -50, -1, 50, 50, 1, -50, -50, 1, -50, 50, -1, -50, -50, 1, -50, -50, -1, -50, 50, -1, -50, 50, 1, 50, 50, 1, -50, 50, -1, 50, 50, 1, -50, 50, -1, -50, 50, -1, 50, -50, 1, -50, -50, 1, 50, -50, -1, -50, -50, 1, 50, -50, -1, 50, -50, -1, -50, 50, 1, 50, -50, 1, 50, 50, 1, -50, -50, 1, 50, -50, 1, -50, 50, 1, -50, -50, -1, 50, 50, -1, 50, -50, -1, -50, 50, -1, 50, 50, -1, -50, -50, -1, -50 )
+
+[sub_resource type="NavigationMesh" id=7]
+
+[sub_resource type="ProceduralSky" id=5]
+sky_top_color = Color( 0.156863, 0.184314, 0.211765, 1 )
+sky_horizon_color = Color( 0.423529, 0.396078, 0.372549, 1 )
+sun_color = Color( 0.788235, 0, 0, 1 )
+
+[sub_resource type="Environment" id=6]
+background_mode = 2
+background_sky = SubResource( 5 )
+background_color = Color( 0.556863, 0.556863, 0.556863, 1 )
+
+[node name="World" type="Spatial"]
+
+[node name="Environment" type="Spatial" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="brickwall6" parent="Environment" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.12749, 1.21027, -3.55775 )
+
+[node name="brickwall7" parent="Environment" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.12749, 1.21027, -3.55775 )
+
+[node name="brickwall8" parent="Environment" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1275, 1.21027, -3.55775 )
+
+[node name="brickwall9" parent="Environment" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.1275, 1.21027, -3.55775 )
+
+[node name="brickwall10" parent="Environment" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.9402, 1.21027, -5.8275 )
+
+[node name="brickwall11" parent="Environment" instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 16.9402, 1.21027, -9.8275 )
+
+[node name="Ground" type="MeshInstance" parent="Environment"]
+mesh = SubResource( 2 )
+
+[node name="StaticBody" type="StaticBody" parent="Environment/Ground"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Ground/StaticBody"]
+shape = SubResource( 3 )
+
+[node name="shed" parent="Environment" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -11 )
+
+[node name="Navigation" type="Navigation" parent="."]
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
+navmesh = SubResource( 7 )
+
+[node name="BirdMonster" parent="Navigation" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.523, 1, -9.339 )
+turn_speed = 180.0
+
+[node name="BirdMonster2" parent="Navigation" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00992, 1.03075, 8.65178 )
+turn_speed = 180.0
+
+[node name="BirdMonster3" parent="Navigation" instance=ExtResource( 8 )]
+transform = Transform( -0.0871558, 0, -0.996195, 0, 1, 0, 0.996195, 0, -0.0871558, 18.6271, 3.65805, -2.99593 )
+turn_speed = 180.0
+
+[node name="ReptileMonster" parent="Navigation" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.44338, -15.4587 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 6 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
+transform = Transform( 1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 30, -29 )
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+
+[node name="FireballSpawner" parent="." instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.50595, 2.1373, -12.9007 )
+
+[node name="Timer" type="Timer" parent="FireballSpawner"]
+wait_time = 0.681
+autostart = true
+
+[node name="HealthPickup" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, 2.65192 )
+
+[node name="MachineGunAmmoPickup" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, -0.284546 )
+
+[node name="MachineGunPickup" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, -3.31465 )
+
+[node name="RocketLauncherAmmoPickup" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, -6.72914 )
+
+[node name="RocketLauncherPickup" parent="." instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, -9.7963 )
+
+[node name="ShotGunAmmoPickup" parent="." instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, -12.7826 )
+
+[node name="ShotGunPickup" parent="." instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, -15.8997 )
+
+[connection signal="timeout" from="FireballSpawner/Timer" to="FireballSpawner" method="fire"]
