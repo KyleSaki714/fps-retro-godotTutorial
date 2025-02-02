@@ -76,3 +76,11 @@ func spawn_gibs():
 	get_tree().get_root().add_child(gibs_instance)
 	gibs_instance.global_transform.origin = global_transform.origin
 	gibs_instance.enable_gibs()
+
+# a get_pickup function specifically for the health manager that's 
+# for health pickups.
+func get_pickup(pickup_type, ammo):
+	match pickup_type:
+		Pickup.PICKUP_TYPES.HEALTH:
+			print("get_pickup(): pickup_type: HEALTH amount: ", ammo)
+			heal(ammo)

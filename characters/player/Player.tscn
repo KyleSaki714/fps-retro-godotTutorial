@@ -552,7 +552,6 @@ margin_bottom = 36.0
 texture = ExtResource( 21 )
 
 [node name="MachineGun" type="Spatial" parent="Camera/WeaponManager/Weapons"]
-visible = false
 script = ExtResource( 11 )
 automatic = true
 damage = 100
@@ -686,6 +685,7 @@ margin_bottom = 36.0
 texture = ExtResource( 20 )
 
 [node name="Fish" type="Spatial" parent="Camera/WeaponManager/Weapons"]
+visible = false
 
 [node name="Graphics" type="Spatial" parent="Camera/WeaponManager/Weapons/Fish"]
 transform = Transform( -0.0106244, 1.68109e-08, 0.101459, -8.91835e-09, 0.102014, -1.78367e-08, -0.101459, -1.07275e-08, -0.0106244, 0.202345, -0.0640752, 0.153534 )

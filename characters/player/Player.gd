@@ -25,9 +25,12 @@ func _ready():
 	character_mover.init(self)
 	
 	pickup_manager.max_player_health = health_manager.max_health
+	
+	# every time the health is changed, let the pickup manager know
 	health_manager.connect("health_changed", pickup_manager, "update_player_health")
-	# pickup_manager.connect("got_pickup")
-	# TODO
+	pickup_manager.connect("got_pickup", weapon_manager, "get_pickup")
+	pickup_manager.connect("got_pickup", health_manager, "get_pickup")
+	
 	health_manager.init()
 	health_manager.connect("dead", self, "kill")
 	weapon_manager.init($Camera/FirePoint, [self])

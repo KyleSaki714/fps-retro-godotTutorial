@@ -102,21 +102,21 @@ func get_pickup(pickup_type, ammo):
 		Pickup.PICKUP_TYPES.MACHINE_GUN:
 			if !slots_unlocked[WEAPON_SLOTS.MACHINE_GUN]:
 				slots_unlocked[WEAPON_SLOTS.MACHINE_GUN] = true
-				switch_to_weapon_slot(WEAPON_SLOTS.MACHINE_GUN)
+			switch_to_weapon_slot(WEAPON_SLOTS.MACHINE_GUN)
 			weapons[WEAPON_SLOTS.MACHINE_GUN].ammo += ammo
 		Pickup.PICKUP_TYPES.MACHINE_GUN_AMMO:
 			weapons[WEAPON_SLOTS.MACHINE_GUN].ammo += ammo
 		Pickup.PICKUP_TYPES.SHOTGUN:
 			if !slots_unlocked[WEAPON_SLOTS.SHOTGUN]:
 				slots_unlocked[WEAPON_SLOTS.SHOTGUN] = true
-				switch_to_weapon_slot(WEAPON_SLOTS.SHOTGUN)
+			switch_to_weapon_slot(WEAPON_SLOTS.SHOTGUN)
 			weapons[WEAPON_SLOTS.SHOTGUN].ammo += ammo
 		Pickup.PICKUP_TYPES.SHOTGUN_AMMO:
 			weapons[WEAPON_SLOTS.SHOTGUN].ammo += ammo
 		Pickup.PICKUP_TYPES.ROCKET_LAUNCHER:
 			if !slots_unlocked[WEAPON_SLOTS.ROCKET_LAUNCHER]:
 				slots_unlocked[WEAPON_SLOTS.ROCKET_LAUNCHER] = true
-				switch_to_weapon_slot(WEAPON_SLOTS.ROCKET_LAUNCHER)
+			switch_to_weapon_slot(WEAPON_SLOTS.ROCKET_LAUNCHER)
 			weapons[WEAPON_SLOTS.ROCKET_LAUNCHER].ammo += ammo
 		Pickup.PICKUP_TYPES.ROCKET_LAUNCHER_AMMO:
 			weapons[WEAPON_SLOTS.ROCKET_LAUNCHER].ammo += ammo
@@ -124,3 +124,4 @@ func get_pickup(pickup_type, ammo):
 
 func emit_ammo_changed_signal():
 	emit_signal("ammo_changed", cur_weapon.ammo)
+	print("current weapon ammo: ", cur_weapon.ammo)
