@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://characters/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://characters/CharacterMover.tscn" type="PackedScene" id=2]
@@ -22,6 +22,9 @@
 [ext_resource path="res://weapons/crosshairs/crosshair026.png" type="Texture" id=20]
 [ext_resource path="res://weapons/crosshairs/crosshair001.png" type="Texture" id=21]
 [ext_resource path="res://characters/player/PickupManager.gd" type="Script" id=22]
+[ext_resource path="res://ui/crypt_domino_1b.png" type="Texture" id=23]
+[ext_resource path="res://ui/KlientenDynFont.tres" type="DynamicFont" id=24]
+[ext_resource path="res://characters/player/StatsDisplay.gd" type="Script" id=25]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -737,7 +740,48 @@ script = ExtResource( 22 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
 shape = SubResource( 22 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RestartMessage" type="Label" parent="CanvasLayer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -139.5
+margin_top = -18.0
+margin_right = 139.5
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 24 )
+text = "Press 'X' to restart"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/RestartMessage"]
+show_behind_parent = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.5
+margin_top = -23.0
+margin_right = 144.5
+margin_bottom = 23.0
+texture = ExtResource( 23 )
+stretch_mode = 2
+
+[node name="StatsDisplay" type="Label" parent="CanvasLayer"]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 157.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 24 )
+text = "Health: 0
+Ammo: 0"
+script = ExtResource( 25 )
+
+[connection signal="ammo_changed" from="Camera/WeaponManager" to="CanvasLayer/StatsDisplay" method="update_ammo"]
 [connection signal="fired" from="Camera/WeaponManager/Weapons/MachineGun" to="Camera/WeaponManager/Weapons/MachineGun/Graphics/MuzzleFlash" method="flash"]
 [connection signal="fired" from="Camera/WeaponManager/Weapons/Shotgun" to="Camera/WeaponManager/Weapons/Shotgun/Graphics/MuzzleFlash" method="flash"]
 [connection signal="fired" from="Camera/WeaponManager/Weapons/RocketLauncher" to="Camera/WeaponManager/Weapons/RocketLauncher/Graphics/MuzzleFlash" method="flash"]
+[connection signal="dead" from="HealthManager" to="CanvasLayer/RestartMessage" method="show"]
+[connection signal="health_changed" from="HealthManager" to="CanvasLayer/StatsDisplay" method="update_health"]
 [connection signal="got_pickup" from="PickupManager" to="Camera/WeaponManager" method="get_pickup"]
