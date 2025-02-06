@@ -1,19 +1,18 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://environment/raw_assets/grass_lowres.png" type="Texture" id=1]
 [ext_resource path="res://pickups/MachineGunPickup.tscn" type="PackedScene" id=2]
 [ext_resource path="res://environment/assets/shed.tscn" type="PackedScene" id=3]
 [ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://weapons/FireballSpawner.tscn" type="PackedScene" id=5]
 [ext_resource path="res://environment/assets/brickwall.tscn" type="PackedScene" id=6]
 [ext_resource path="res://characters/enemies/ReptileMonster.tscn" type="PackedScene" id=7]
-[ext_resource path="res://characters/enemies/BirdMonster.tscn" type="PackedScene" id=8]
 [ext_resource path="res://pickups/MachineGunAmmoPickup.tscn" type="PackedScene" id=9]
 [ext_resource path="res://pickups/RocketLauncherAmmoPickup.tscn" type="PackedScene" id=10]
 [ext_resource path="res://pickups/HealthPickup.tscn" type="PackedScene" id=11]
 [ext_resource path="res://pickups/RocketLauncherPickup.tscn" type="PackedScene" id=12]
 [ext_resource path="res://pickups/ShotGunAmmoPickup.tscn" type="PackedScene" id=13]
 [ext_resource path="res://pickups/ShotGunPickup.tscn" type="PackedScene" id=14]
+[ext_resource path="res://gadgets/MonsterSpawner.tscn" type="PackedScene" id=15]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_texture = ExtResource( 1 )
@@ -79,18 +78,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 1, -11 )
 [node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
 navmesh = SubResource( 7 )
 
-[node name="BirdMonster" parent="Navigation" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.523, 1, -9.339 )
-turn_speed = 180.0
-
-[node name="BirdMonster2" parent="Navigation" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00992, 1.03075, 8.65178 )
-turn_speed = 180.0
-
-[node name="BirdMonster3" parent="Navigation" instance=ExtResource( 8 )]
-transform = Transform( -0.0871558, 0, -0.996195, 0, 1, 0, 0.996195, 0, -0.0871558, 18.6271, 3.65805, -2.99593 )
-turn_speed = 180.0
-
 [node name="ReptileMonster" parent="Navigation" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.44338, -15.4587 )
 
@@ -102,13 +89,6 @@ transform = Transform( 1, 0, 0, 0, -0.5, 0.866025, 0, -0.866025, -0.5, 0, 30, -2
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-
-[node name="FireballSpawner" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.50595, 2.1373, -12.9007 )
-
-[node name="Timer" type="Timer" parent="FireballSpawner"]
-wait_time = 0.681
-autostart = true
 
 [node name="HealthPickup" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, 2.65192 )
@@ -131,4 +111,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, -12.7826 )
 [node name="ShotGunPickup" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5678, 1.44012, -15.8997 )
 
-[connection signal="timeout" from="FireballSpawner/Timer" to="FireballSpawner" method="fire"]
+[node name="MonsterSpawner" parent="." instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.98154, 3.04562, -7.86128 )
