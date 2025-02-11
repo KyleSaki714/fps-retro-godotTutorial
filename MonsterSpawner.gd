@@ -2,6 +2,7 @@ extends Spatial
 
 var birdmonster = preload("res://characters/enemies/BirdMonster.tscn")
 var reptilemonster = preload("res://characters/enemies/ReptileMonster.tscn")
+var smallmonster = preload("res://characters/enemies/SmallMonster.tscn")
 
 export var _spawn_diameter = 3
 export var isActive = true
@@ -14,7 +15,7 @@ func spawn(spawn_count=10):
 	if isActive == false:
 		return
 	for n in range(spawn_count):
-		var reptile_monster_inst = birdmonster.instance()
+		var reptile_monster_inst = smallmonster.instance()
 		reptile_monster_inst.global_transform = Transform(reptile_monster_inst.global_transform.basis, global_transform.origin + rand_point())
 		get_tree().get_root().get_node("./World/Navigation").add_child(reptile_monster_inst)
 		

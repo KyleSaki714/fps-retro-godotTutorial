@@ -46,13 +46,16 @@ func _ready():
 	add_child(attack_timer)
 	
 	
-	
+	print("get node or null")
+	print(get_node_or_null("Graphics/Armature"))
 	_player = get_tree().get_nodes_in_group("player")[0]
-	var bone_attachments = $Graphics/Armature/Skeleton.get_children()
-	for bone_attachment in bone_attachments:
-		for child in bone_attachment.get_children():
-			if child is HitBox:
-				child.connect("hurt", self, "hurt")
+	
+	if get_node_or_null("Graphics/Armature") != null:
+		var bone_attachments = $Graphics/Armature/Skeleton.get_children()
+		for bone_attachment in bone_attachments:
+			for child in bone_attachment.get_children():
+				if child is HitBox:
+					child.connect("hurt", self, "hurt")
 	
 	health_manager.init()
 	health_manager.connect("dead", self, "set_state_dead")

@@ -1,0 +1,86 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://characters/Hitbox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://characters/enemies/Monster.gd" type="Script" id=3]
+[ext_resource path="res://characters/HealthManager.tscn" type="PackedScene" id=4]
+[ext_resource path="res://characters/CharacterMover.tscn" type="PackedScene" id=5]
+[ext_resource path="res://weapons/DamageArea.tscn" type="PackedScene" id=6]
+[ext_resource path="res://characters/enemies/AimAtObject.gd" type="Script" id=7]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="QuadMesh" id=3]
+size = Vector2( 0.75, 0.75 )
+
+[sub_resource type="Skin" id=4]
+
+[sub_resource type="SpatialMaterial" id=5]
+params_billboard_mode = 1
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "attack"
+loop = true
+
+[sub_resource type="Animation" id=7]
+resource_name = "die"
+loop = true
+
+[sub_resource type="Animation" id=8]
+resource_name = "idle_loop"
+loop = true
+
+[sub_resource type="Animation" id=9]
+resource_name = "walk_loop"
+loop = true
+
+[sub_resource type="SphereShape" id=2]
+radius = 0.5
+
+[node name="SmallMonster" type="KinematicBody"]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource( 3 )
+
+[node name="Graphics" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+
+[node name="Hitbox" parent="Graphics" instance=ExtResource( 1 )]
+transform = Transform( 0.412592, 0, 0, 0, 0.412592, 0, 0, 0, 0.412592, 0, 0, 0 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="Graphics/Hitbox"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Graphics"]
+mesh = SubResource( 3 )
+skin = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Graphics"]
+autoplay = "idle_loop"
+anims/attack = SubResource( 6 )
+anims/die = SubResource( 7 )
+anims/idle_loop = SubResource( 8 )
+anims/walk_loop = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.504614, 0 )
+shape = SubResource( 2 )
+
+[node name="HealthManager" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.47677, 0 )
+max_health = 35
+
+[node name="CharacterMover" parent="." instance=ExtResource( 5 )]
+max_speed = 5
+jump_force = 7
+gravity = 25
+ignore_rotation = true
+
+[node name="AimAtObject" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+script = ExtResource( 7 )
+
+[node name="DamageArea" parent="AimAtObject" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.07017 )
