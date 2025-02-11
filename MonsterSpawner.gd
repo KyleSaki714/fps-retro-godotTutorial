@@ -4,12 +4,15 @@ var birdmonster = preload("res://characters/enemies/BirdMonster.tscn")
 var reptilemonster = preload("res://characters/enemies/ReptileMonster.tscn")
 
 export var _spawn_diameter = 3
+export var isActive = true
 
 func _ready():
 	spawn()
 
 # spawns a number of enemies within the specified _spawn_diameter.
 func spawn(spawn_count=10):
+	if isActive == false:
+		return
 	for n in range(spawn_count):
 		var reptile_monster_inst = birdmonster.instance()
 		reptile_monster_inst.global_transform = Transform(reptile_monster_inst.global_transform.basis, global_transform.origin + rand_point())

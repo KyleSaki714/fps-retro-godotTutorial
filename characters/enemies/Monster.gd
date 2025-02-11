@@ -13,7 +13,7 @@ enum STATES {
 }
 var cur_state = STATES.IDLE
 
-var player = null
+var _player = null
 var path = []
 
 export var sight_angle = 45
@@ -47,7 +47,7 @@ func _ready():
 	
 	
 	
-	player = get_tree().get_nodes_in_group("player")[0]
+	_player = get_tree().get_nodes_in_group("player")[0]
 	var bone_attachments = $Graphics/Armature/Skeleton.get_children()
 	for bone_attachment in bone_attachments:
 		for child in bone_attachment.get_children():
@@ -98,7 +98,7 @@ func process_state_idle(delta):
 func process_state_chase(delta):
 	if within_dist_of_player(attack_range) and has_los_player():
 		set_state_attack()
-	var player_pos: Vector3 = player.global_transform.origin
+	var player_pos: Vector3 = _player.global_transform.origin
 	var our_pos: Vector3 = global_transform.origin
 	path = nav.get_simple_path(our_pos, player_pos)
 
@@ -124,7 +124,7 @@ func process_state_attack(delta):
 		if !within_dist_of_player(attack_range) or !can_see_player():
 			set_state_chase()
 		elif !player_within_angle(attack_angle) and can_attack:
-			face_dir(global_transform.origin.direction_to(player.global_transform.origin), delta)
+			face_dir(global_transform.origin.direction_to(_player.global_transform.origin), delta)
 		else:
 			start_attack()
 			
@@ -156,14 +156,14 @@ func can_see_player():
 	return player_within_angle(sight_angle) and has_los_player()
 
 func player_within_angle(angle: float):
-	var dir_to_player = global_transform.origin.direction_to(player.global_transform.origin)
+	var dir_to_player = global_transform.origin.direction_to(_player.global_transform.origin)
 	var forwards = global_transform.basis.z
 	return rad2deg(forwards.angle_to(dir_to_player)) < angle
 
 # returns true if monster's sight of player is not obstructed
 func has_los_player():
 	var our_pos = global_transform.origin + Vector3.UP
-	var player_pos = player.global_transform.origin + Vector3.UP
+	var player_pos = _player.global_transform.origin + Vector3.UP
 	
 	var space_state = get_world().get_direct_space_state()
 	var result = space_state.intersect_ray(our_pos, player_pos, [], 1)
@@ -191,6 +191,9 @@ func face_dir(dir: Vector3, delta):
 	else:
 		# increment the turning by amt_to_turn * the sign
 		rotation.y += amt_to_turn * turn_right
+	
+	# aim towards player
+	$AimAtObject.aim_at_pos(_player.global_transform.origin)
 
 func alert(check_los=true):
 	# check if not already in IDLE state
@@ -201,4 +204,4 @@ func alert(check_los=true):
 	set_state_chase()
 
 func within_dist_of_player(dist: float):
-	return global_transform.origin.distance_to(player.global_transform.origin) < attack_range
+	return global_transform.origin.distance_to(_player.global_transform.origin) < attack_range
